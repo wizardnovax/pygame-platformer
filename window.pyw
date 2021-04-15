@@ -21,15 +21,13 @@ platform_img = pygame.image.load('media/platform.png')
 platform1 = pygame.transform.scale(platform_img,(750,40))
 platform2= pygame.transform.scale(platform_img,(380,40))
 
+
 platform1rect = platform1.get_rect()
 platform1rect.x,platform1rect.y= 410,600
-
 platform2rect = platform2.get_rect()
 platform2rect.x,platform2rect.y= 250,400
-
 platform3rect = platform2.get_rect()
 platform3rect.x,platform3rect.y= 950,400
-
 platform4rect = platform1.get_rect()
 platform4rect.x,platform4rect.y= 410,210
 
@@ -46,14 +44,14 @@ def drawgame():
 
 
 
-
 #creates class character
 class Player():
-	def __init__(self,x,y,i,health,lives):
+	def __init__(self,x,y,i,health,lives,mode):
 		self.i = i
 		self.health = health
 		self.lives = lives
 		self.rebirthcounter = 0
+		self.mode = mode
 
 		#animation sprites
 		self.images_right = []
@@ -70,7 +68,6 @@ class Player():
 		self.image = self.images_right[self.index]
 		self.rect = self.image.get_rect()
 
-
 		#position & movment variables
 		self.rect.x = x
 		self.rect.y = y
@@ -79,7 +76,7 @@ class Player():
 		self.vel_y = 0
 		self.jumped = False
 		self.direction = 'right'
-		self.mode = 'idle'
+
 
 	#basic functions
 	def getxpos(self):
@@ -206,7 +203,7 @@ class Player():
 				else:
 					self.permafall = False
 
-		#attacks
+		#attack other player
 		for player in players:
 			if(player.getname()!=self.i):
 				if(self.mode =='attack'):
@@ -218,8 +215,8 @@ class Player():
 							player.setxpos(player.getxpos()-80)
 						player.setypos(player.getypos()-60)
 
-						if(player.get_health()-20>0):
-							player.set_health(player.get_health()-20)
+						if(player.get_health()-10>0):
+							player.set_health(player.get_health()-10)
 						
 						else:
 							player.set_lives(player.get_lives()-1)
@@ -227,8 +224,6 @@ class Player():
 							player.setxpos(200)
 							player.setypos(300)
 					self.mode = 'idle'
-
-
 
 
 		#draw to screen
@@ -259,12 +254,10 @@ class Player():
 
 	
 
-
-
+#main loop, when socket will be added players will be updated everytime by server message to include all player attributes
 font = pygame.font.Font(None,50)
-
-player1 = Player(200,200,True,100,3)
-player2 = Player(500,200,False,100,3)
+player1 = Player(200,200,True,100,3,'idle')
+player2 = Player(500,200,False,100,3,'idle')
 players = [player1,player2]
 run = True
 while run:
