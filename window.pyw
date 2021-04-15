@@ -11,6 +11,8 @@ screen_width = 1500
 screen_height = 900
 screen = pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption("Athena")
+pygame.display.set_icon(pygame. image.load('media/icon.png'))
+
 
 #import graphic and display background ones
 background_img = pygame.image.load('media/background.png')
