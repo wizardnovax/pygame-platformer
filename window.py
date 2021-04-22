@@ -64,7 +64,7 @@ class Player():
 		self.permafall = False
 		self.counter = 0
 		for num in range(0,7):
-					skin_right = pygame.image.load(f'media/Knight/Idle/{num}.png')
+					skin_right = pygame.image.load('media/Knight/Idle/{0}.png'.format(num))
 					skin_right = pygame.transform.scale(skin_right,(125,110))
 					self.images_right.append(skin_right)
 					skin_left = pygame.transform.flip(skin_right,True,False)
@@ -110,7 +110,7 @@ class Player():
 		return self.mode
 
 	def info(self):
-		return f"{self.name},{self.rect.x},{self.rect.y},{self.health},{self.lives},{self.mode},{self.direction}"
+		return "{0},{1},{2},{3},{4},{5},{6}".format(self.name,self.rect.x.self.rect.y,self.health,self.lives,self.mode,self.direction}
 
 	def attacked(self,direction):
 		if(direction=='right'):
@@ -201,7 +201,7 @@ class Player():
 							if(self.mode =='attack'):
 								if player.rect.colliderect(self.rect.x,self.rect.y,self.width,self.height):
 									self.attackcounter =0
-									print(f'send attack from {myname} to {player.getname()}')
+									print('send attack from {0} to {1}'.format(myname,player.getname()))
 									player.attacked(self.direction)
 								self.mode = 'idle'
 
@@ -248,7 +248,7 @@ run = True
 while run:
 	drawgame()
 	myhealth = player1.get_health()
-	text = font.render(f'{player1.get_lives()},{player1.get_health()}', True, (0, 0, 0))
+	text = font.render('{0},{1}'.format(player1.get_lives(),player1.get_health()), True, (0, 0, 0))
 	screen.blit(text, (screen_width-150, 20))
 	player1.update()
 	player2.update()
