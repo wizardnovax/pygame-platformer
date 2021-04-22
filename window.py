@@ -50,13 +50,13 @@ def drawgame():
 
 #creates class character
 class Player():
-	def __init__(self,name,x,y,health,lives,mode):
+	def __init__(self,name,x,y,health,lives,mode,direction):
 		self.name = name
 		self.health = health
 		self.lives = lives
 		self.rebirthcounter = 0
 		self.mode = mode
-
+		self.direction = direction
 		#animation sprites
 		self.images_right = []
 		self.images_left = []
@@ -69,7 +69,10 @@ class Player():
 					self.images_right.append(skin_right)
 					skin_left = pygame.transform.flip(skin_right,True,False)
 					self.images_left.append(skin_left)
-		self.image = self.images_right[self.index]
+		if(self.direction=='right'):
+			self.image = self.images_right[self.index]
+		else:
+			self.image = self.images_left[self.index]
 		self.rect = self.image.get_rect()
 
 		#position & movment variables
@@ -79,7 +82,7 @@ class Player():
 		self.height = self.image.get_width()
 		self.vel_y = 0
 		self.jumped = False
-		self.direction = 'right'
+
 
 
 	#basic functions
@@ -107,8 +110,8 @@ class Player():
 		return self.mode
 
 	def info(self):
-		return f"{self.name},{self.rect.x},{self.rect.y},{self.health},{self.lives},{self.mode}"
-		
+		return f"{self.name},{self.rect.x},{self.rect.y},{self.health},{self.lives},{self.mode},{self.direction}"
+
 	def attacked(self,direction):
 		if(direction=='right'):
 			self.setxpos(self.getxpos()+80)
@@ -238,8 +241,8 @@ class Player():
 
 #main loop, when socket will be added players will be updated everytime by server message to include all player attributes
 font = pygame.font.Font(None,50)
-player1 = Player('ziv',200,200,100,3,'idle')
-player2 = Player('leaf',500,200,100,3,'idle')
+player1 = Player('ziv',200,200,100,3,'idle','left')
+player2 = Player('leaf',500,200,100,3,'idle','left')
 players = [player1,player2]
 run = True
 while run:
